@@ -3,41 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ApexTrade - Financial Dashboard</title>
+    <title>ApexTrade - Dashboard</title>
     <style>
         :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --card-border: #334155;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary: #38bdf8;
-            --primary-hover: #0284c7;
-            --green: #22c55e;
-            --green-bg: rgba(34, 197, 94, 0.15);
-            --red: #ef4444;
-            --red-bg: rgba(239, 68, 68, 0.15);
-            --accent: #6366f1;
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --border-light: #f1f5f9;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent: #0f172a;
+            --green: #059669;
+            --green-bg: #ecfdf5;
+            --green-border: #a7f3d0;
+            --red: #dc2626;
+            --red-bg: #fef2f2;
+            --red-border: #fecaca;
+            --blue: #2563eb;
+            --blue-bg: #eff6ff;
+            --blue-border: #bfdbfe;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
             background-color: var(--bg);
-            color: var(--text-main);
-            padding: 24px;
+            color: var(--text-primary);
+            padding: 32px 20px;
             display: flex;
             justify-content: center;
         }
 
         .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1040px;
         }
 
         /* Header */
@@ -45,38 +51,30 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid var(--card-border);
+            border-bottom: 1px solid var(--border);
             padding-bottom: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         .brand h1 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .brand span {
-            color: var(--primary);
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            color: var(--text-primary);
         }
 
         .brand p {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
-            margin-top: 4px;
+            margin-top: 3px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .user-switcher {
             display: flex;
             align-items: center;
-            gap: 12px;
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 8px 16px;
-            border-radius: 8px;
+            gap: 10px;
         }
 
         .user-switcher label {
@@ -85,43 +83,50 @@
         }
 
         .user-switcher select {
-            background: #0f172a;
-            color: var(--text-main);
-            border: 1px solid var(--card-border);
-            padding: 6px 12px;
+            background: var(--surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+            padding: 7px 12px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
+            outline: none;
+            transition: border-color 0.15s ease;
         }
 
-        /* Banner Message */
+        .user-switcher select:focus {
+            border-color: var(--accent);
+        }
+
+        /* Alert / Banner */
         #alert-box {
             display: none;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 10px 14px;
+            border-radius: 6px;
             margin-bottom: 20px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
         }
 
         .alert-success {
             background: var(--green-bg);
             color: var(--green);
-            border: 1px solid var(--green);
+            border: 1px solid var(--green-border);
         }
 
         .alert-error {
             background: var(--red-bg);
             color: var(--red);
-            border: 1px solid var(--red);
+            border: 1px solid var(--red-border);
         }
 
-        /* Top Grid */
+        /* Cards Grid */
         .grid-top {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
         }
 
         @media (max-width: 768px) {
@@ -131,16 +136,18 @@
         }
 
         .card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 12px;
-            padding: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 22px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
         }
 
         .card-header {
-            font-size: 13px;
+            font-size: 11px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
             color: var(--text-muted);
             margin-bottom: 12px;
             display: flex;
@@ -149,10 +156,11 @@
         }
 
         .balance-amount {
-            font-size: 36px;
+            font-size: 32px;
             font-weight: 700;
-            color: var(--green);
-            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            margin-bottom: 4px;
         }
 
         .user-meta {
@@ -164,7 +172,7 @@
         .form-row {
             display: flex;
             gap: 12px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .form-group {
@@ -176,66 +184,85 @@
 
         .form-group label {
             font-size: 12px;
-            color: var(--text-muted);
+            font-weight: 500;
+            color: var(--text-secondary);
         }
 
         input, select {
-            background: #0f172a;
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 9px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 8px 11px;
             border-radius: 6px;
-            font-size: 14px;
+            font-size: 13px;
+            outline: none;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
         }
 
         input:focus, select:focus {
-            outline: none;
-            border-color: var(--primary);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 1px var(--accent);
         }
 
         .btn {
-            background: var(--primary);
-            color: #0f172a;
-            font-weight: 600;
-            border: none;
-            padding: 10px 16px;
+            padding: 8px 14px;
             border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            transition: background 0.15s ease;
-            font-size: 14px;
+            transition: all 0.15s ease;
+            outline: none;
+            border: 1px solid transparent;
         }
 
-        .btn:hover {
-            background: var(--primary-hover);
+        .btn-primary {
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .btn-primary:hover {
+            background: #1e293b;
+        }
+
+        .btn-outline {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--border-light);
         }
 
         .btn-deposit {
-            background: var(--green);
-            color: #052e16;
+            background: var(--accent);
+            color: #ffffff;
+            white-space: nowrap;
         }
 
         .btn-deposit:hover {
-            background: #16a34a;
+            background: #1e293b;
         }
 
         .btn-buy {
-            background: var(--green);
-            color: #052e16;
+            background: var(--accent);
+            color: #ffffff;
             flex: 1;
         }
 
         .btn-buy:hover {
-            background: #16a34a;
+            background: #1e293b;
         }
 
         .btn-sell {
-            background: var(--accent);
-            color: white;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
             flex: 1;
         }
 
         .btn-sell:hover {
-            background: #4f46e5;
+            background: var(--border-light);
         }
 
         .btn-group {
@@ -243,36 +270,75 @@
             gap: 10px;
         }
 
+        .refresh-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 4px 9px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .refresh-btn:hover {
+            color: var(--text-primary);
+            border-color: var(--text-secondary);
+        }
+
         /* Tables */
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            margin-top: 24px;
+        .section-header {
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: baseline;
+            margin-top: 32px;
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .table-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            margin-bottom: 28px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         th {
             text-align: left;
             padding: 10px 14px;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 600;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-bottom: 1px solid var(--card-border);
+            letter-spacing: 0.6px;
+            background: #fafafa;
+            border-bottom: 1px solid var(--border);
         }
 
         td {
-            padding: 12px 14px;
-            border-bottom: 1px solid rgba(51, 65, 85, 0.4);
+            padding: 11px 14px;
+            border-bottom: 1px solid var(--border-light);
+            color: var(--text-secondary);
         }
 
         tr:last-child td {
@@ -281,51 +347,40 @@
 
         .badge {
             display: inline-block;
-            padding: 3px 8px;
+            padding: 2px 7px;
             border-radius: 4px;
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .badge-deposit {
             background: var(--green-bg);
             color: var(--green);
+            border: 1px solid var(--green-border);
         }
 
         .badge-buy {
             background: var(--red-bg);
             color: var(--red);
+            border: 1px solid var(--red-border);
         }
 
         .badge-sell {
-            background: rgba(99, 102, 241, 0.2);
-            color: #a5b4fc;
+            background: var(--blue-bg);
+            color: var(--blue);
+            border: 1px solid var(--blue-border);
         }
 
-        .positive {
+        .amount-positive {
             color: var(--green);
             font-weight: 600;
         }
 
-        .negative {
+        .amount-negative {
             color: var(--red);
             font-weight: 600;
-        }
-
-        .refresh-btn {
-            background: transparent;
-            border: 1px solid var(--card-border);
-            color: var(--text-muted);
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-        }
-
-        .refresh-btn:hover {
-            color: var(--text-main);
-            border-color: var(--primary);
         }
     </style>
 </head>
@@ -334,11 +389,11 @@
         <!-- Header -->
         <header>
             <div class="brand">
-                <h1>⚡ Apex<span>Trade</span></h1>
-                <p>ACID-Compliant MySQL 8.0 Financial Engine</p>
+                <h1>ApexTrade</h1>
+                <p>MySQL 8.0 Transactional Engine</p>
             </div>
             <div class="user-switcher">
-                <label for="user-select">Active User:</label>
+                <label for="user-select">User</label>
                 <select id="user-select" onchange="loadUserData()">
                     <option value="1">Alice (alice@apex.com)</option>
                     <option value="2">Bob (bob@apex.com)</option>
@@ -347,22 +402,22 @@
             </div>
         </header>
 
-        <!-- Notification Banner -->
+        <!-- Status Banner -->
         <div id="alert-box"></div>
 
-        <!-- Top Grid: Balance & Fast Actions -->
+        <!-- Cards: Balance & Trading -->
         <div class="grid-top">
             <!-- Balance Card -->
             <div class="card">
                 <div class="card-header">
                     <span>Cash Balance (wallets)</span>
-                    <button class="refresh-btn" onclick="loadUserData()">↻ Refresh</button>
+                    <button class="refresh-btn" onclick="loadUserData()">Refresh</button>
                 </div>
                 <div class="balance-amount" id="wallet-balance">$0.00</div>
-                <div class="user-meta" id="user-info">Loading user...</div>
+                <div class="user-meta" id="user-info">Loading...</div>
 
-                <div style="margin-top: 24px; border-top: 1px solid var(--card-border); padding-top: 16px;">
-                    <div class="card-header" style="margin-bottom: 8px;">Quick Cash Deposit</div>
+                <div style="margin-top: 22px; border-top: 1px solid var(--border-light); padding-top: 16px;">
+                    <div class="card-header" style="margin-bottom: 8px;">Quick Deposit</div>
                     <div style="display: flex; gap: 8px;">
                         <input type="number" id="deposit-amount" placeholder="Amount ($)" min="1" step="10" style="flex: 1;">
                         <button class="btn btn-deposit" onclick="handleDeposit()">Deposit</button>
@@ -373,12 +428,12 @@
             <!-- Trading Card -->
             <div class="card">
                 <div class="card-header">
-                    <span>Trade Assets (SELECT ... FOR UPDATE)</span>
+                    <span>Trade Assets</span>
                 </div>
                 <div class="form-group" style="margin-bottom: 12px;">
-                    <label>Select Asset</label>
+                    <label>Asset</label>
                     <select id="asset-select" onchange="updateDefaultPrice()">
-                        <!-- Populated by JS -->
+                        <!-- Dynamic -->
                     </select>
                 </div>
                 <div class="form-row">
@@ -387,58 +442,59 @@
                         <input type="number" id="trade-qty" placeholder="1.0" min="0.0001" step="any" value="1">
                     </div>
                     <div class="form-group">
-                        <label>Price per Unit ($)</label>
+                        <label>Price ($)</label>
                         <input type="number" id="trade-price" placeholder="150.00" min="0.01" step="0.01">
                     </div>
                 </div>
-                <div class="form-group" style="margin-bottom: 16px;">
+                <div class="form-group" style="margin-bottom: 14px;">
                     <label>Estimated Total</label>
-                    <div id="trade-total" style="font-size: 18px; font-weight: 600; color: var(--primary);">$0.00</div>
+                    <div id="trade-total" style="font-size: 16px; font-weight: 600; color: var(--text-primary);">$0.00</div>
                 </div>
                 <div class="btn-group">
-                    <button class="btn btn-buy" onclick="handleTrade('buy')">Buy Asset</button>
-                    <button class="btn btn-sell" onclick="handleTrade('sell')">Sell Asset</button>
+                    <button class="btn btn-buy" onclick="handleTrade('buy')">Buy</button>
+                    <button class="btn btn-sell" onclick="handleTrade('sell')">Sell</button>
                 </div>
             </div>
         </div>
 
         <!-- Portfolio Holdings -->
-        <div class="section-title">
-            <span>Portfolio Holdings (portfolios)</span>
+        <div class="section-header">
+            <span class="section-title">Portfolio Holdings</span>
+            <span class="section-subtitle">portfolios</span>
         </div>
-        <div class="card" style="padding: 0; overflow: hidden; margin-bottom: 24px;">
+        <div class="table-card">
             <table>
                 <thead>
                     <tr>
-                        <th>Asset Ticker</th>
-                        <th>Asset Name</th>
-                        <th>Quantity Owned</th>
+                        <th>Ticker</th>
+                        <th>Name</th>
+                        <th>Quantity</th>
                     </tr>
                 </thead>
                 <tbody id="holdings-body">
-                    <tr><td colspan="3" style="text-align: center; color: var(--text-muted);">No holdings found.</td></tr>
+                    <tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 18px;">No holdings.</td></tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Immutable Transaction Ledger -->
-        <div class="section-title">
-            <span>Audit Trail (transaction_ledger)</span>
-            <span style="font-size: 12px; color: var(--text-muted); font-weight: normal;">Immutable append-only log</span>
+        <!-- Audit Ledger -->
+        <div class="section-header">
+            <span class="section-title">Audit Ledger</span>
+            <span class="section-subtitle">transaction_ledger (append-only)</span>
         </div>
-        <div class="card" style="padding: 0; overflow: hidden;">
+        <div class="table-card">
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Type</th>
                         <th>Asset</th>
-                        <th>Amount ($)</th>
+                        <th>Amount</th>
                         <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody id="ledger-body">
-                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted);">No transactions recorded.</td></tr>
+                    <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 18px;">No transactions recorded.</td></tr>
                 </tbody>
             </table>
         </div>
@@ -508,15 +564,13 @@
                     return;
                 }
 
-                // Balance
                 const numBal = parseFloat(data.balance);
                 document.getElementById('wallet-balance').innerText = '$' + numBal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-                document.getElementById('user-info').innerText = `${data.user.email} (User #${data.user.id})`;
+                document.getElementById('user-info').innerText = `${data.user.email} · User #${data.user.id}`;
 
-                // Holdings
                 const holdingsBody = document.getElementById('holdings-body');
                 if (data.holdings.length === 0) {
-                    holdingsBody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 20px;">No asset holdings yet.</td></tr>';
+                    holdingsBody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--text-muted); padding: 18px;">No asset holdings.</td></tr>';
                 } else {
                     holdingsBody.innerHTML = data.holdings.map(h => `
                         <tr>
@@ -527,10 +581,9 @@
                     `).join('');
                 }
 
-                // Ledger
                 const ledgerBody = document.getElementById('ledger-body');
                 if (data.ledger.length === 0) {
-                    ledgerBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">No transactions recorded.</td></tr>';
+                    ledgerBody.innerHTML = '<tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 18px;">No transactions recorded.</td></tr>';
                 } else {
                     ledgerBody.innerHTML = data.ledger.map(tx => {
                         const isCredit = parseFloat(tx.amount) >= 0;
@@ -540,10 +593,10 @@
                                 <td>#${tx.id}</td>
                                 <td><span class="badge ${badgeClass}">${tx.transaction_type}</span></td>
                                 <td>${tx.ticker_symbol || 'CASH'}</td>
-                                <td class="${isCredit ? 'positive' : 'negative'}">
+                                <td class="${isCredit ? 'amount-positive' : 'amount-negative'}">
                                     ${isCredit ? '+' : ''}$${parseFloat(tx.amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                 </td>
-                                <td style="color: var(--text-muted); font-size: 13px;">${new Date(tx.created_at).toLocaleString()}</td>
+                                <td style="color: var(--text-muted); font-size: 12px;">${new Date(tx.created_at).toLocaleString()}</td>
                             </tr>
                         `;
                     }).join('');
@@ -613,7 +666,7 @@
         function showAlert(msg, isError) {
             const alertBox = document.getElementById('alert-box');
             alertBox.className = isError ? 'alert-error' : 'alert-success';
-            alertBox.innerText = (isError ? '⚠️ ' : '✅ ') + msg;
+            alertBox.innerText = msg;
             alertBox.style.display = 'block';
 
             setTimeout(() => {
